@@ -10,3 +10,8 @@ Modèle public de la filière Astro + Decap CMS + Cloudflare Workers. N'y écrir
 - Déploiement uniquement sur `workers.dev` tant que le modèle n'est pas validé. Aucune ressource Cloudflare créée sans l'accord de Gérard.
 - Les contenus éditables par le client restent dans `src/content/`, séparés des composants.
 - Après chaque étape : build local réussi et rendu vérifié avant de proposer la fusion.
+
+## Standards et Skills
+
+- Standards à appliquer : https://github.com/itnetgg-web-factory/socle/tree/main/standards
+- Skill Claude Code de la filière : `site-astro` ; livraison : `site-delivery`.
