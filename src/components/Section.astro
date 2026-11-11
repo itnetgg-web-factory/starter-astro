@@ -1,0 +1,48 @@
+---
+// Conteneur de section : ancre, titre h2, introduction facultative.
+export interface Props {
+  id: string;
+  title: string;
+  intro?: string;
+  tone?: 'default' | 'alt';
+}
+
+const { id, title, intro, tone = 'default' } = Astro.props;
+const titleId = `${id}-titre`;
+---
+
+<section id={id} class:list={['section', `section--${tone}`]} aria-labelledby={titleId}>
+  <div class="container">
+    <header class="section__header">
+      <h2 id={titleId}>{title}</h2>
+      {intro && <p class="section__intro">{intro}</p>}
+    </header>
+    <slot />
+  </div>
+</section>
+
+<style>
+  .section {
+    padding-block: var(--space-5);
+    scroll-margin-top: var(--space-2);
+  }
+
+  .section--alt {
+    background: var(--color-surface-alt);
+  }
+
+  .section__header {
+    max-width: 48rem;
+    margin-bottom: var(--space-4);
+  }
+
+  .section__header h2 {
+    margin: 0;
+    font-size: clamp(1.625rem, 1.3rem + 1.4vw, 2.25rem);
+  }
+
+  .section__intro {
+    margin: var(--space-1) 0 0;
+    color: var(--color-muted);
+  }
+</style>

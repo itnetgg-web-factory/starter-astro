@@ -1,0 +1,79 @@
+---
+// En-tête du site : nom, navigation principale. Sans JavaScript.
+export interface NavItem {
+  label: string;
+  href: string;
+}
+
+export interface Props {
+  siteName: string;
+  nav: NavItem[];
+}
+
+const { siteName, nav } = Astro.props;
+const current = Astro.url.pathname.replace(/\/$/, '') || '/';
+---
+
+<header class="header">
+  <div class="container header__inner">
+    <a class="header__brand" href="/">{siteName}</a>
+    <nav aria-label="Navigation principale">
+      <ul class="header__nav">
+        {
+          nav.map((item) => (
+            <li>
+              <a href={item.href} aria-current={item.href === current ? 'page' : undefined}>
+                {item.label}
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<style>
+  .header {
+    border-bottom: 1px solid var(--color-border);
+    background: var(--color-surface);
+  }
+
+  .header__inner {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-1) var(--space-3);
+    padding-block: var(--space-2);
+  }
+
+  .header__brand {
+    font-weight: 700;
+    font-size: 1.125rem;
+    color: var(--color-text);
+    text-decoration: none;
+  }
+
+  .header__nav {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-1) var(--space-3);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .header__nav a {
+    display: inline-block;
+    padding-block: 0.25rem;
+    color: var(--color-text);
+    text-decoration: none;
+  }
+
+  .header__nav a:hover,
+  .header__nav a[aria-current='page'] {
+    color: var(--color-accent);
+    text-decoration: underline;
+  }
+</style>

@@ -1,0 +1,124 @@
+---
+// Liste de formules et tarifs.
+import Button from './Button.astro';
+import type { Props as ButtonProps } from './Button.astro';
+
+export interface Plan {
+  name: string;
+  price: string;
+  period?: string;
+  description: string;
+  features: string[];
+  highlighted?: boolean;
+  cta?: ButtonProps;
+}
+
+export interface Props {
+  plans: Plan[];
+  note?: string;
+}
+
+const { plans, note } = Astro.props;
+---
+
+<ul class="prices">
+  {
+    plans.map((plan) => (
+      <li class:list={['plan', { 'plan--highlighted': plan.highlighted }]}>
+        <h3 class="plan__name">{plan.name}</h3>
+        {plan.highlighted && <p class="plan__badge">Formule conseillée</p>}
+        <p class="plan__price">
+          <span class="plan__amount">{plan.price}</span>
+          {plan.period && <span class="plan__period"> {plan.period}</span>}
+        </p>
+        <p class="plan__description">{plan.description}</p>
+        <ul class="plan__features">
+          {plan.features.map((feature) => (
+            <li>{feature}</li>
+          ))}
+        </ul>
+        {plan.cta && (
+          <div class="plan__cta">
+            <Button {...plan.cta} variant={plan.highlighted ? 'primary' : 'secondary'} />
+          </div>
+        )}
+      </li>
+    ))
+  }
+</ul>
+{note && <p class="prices__note">{note}</p>}
+
+<style>
+  .prices {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 17rem), 1fr));
+    gap: var(--space-3);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .plan {
+    display: flex;
+    flex-direction: column;
+    padding: var(--space-3);
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius);
+  }
+
+  .plan--highlighted {
+    border: 2px solid var(--color-accent);
+    box-shadow: var(--shadow);
+  }
+
+  .plan__name {
+    margin: 0;
+    font-size: 1.25rem;
+  }
+
+  .plan__badge {
+    align-self: flex-start;
+    margin: var(--space-1) 0 0;
+    padding: 0.1rem 0.6rem;
+    border-radius: 999px;
+    background: var(--color-accent);
+    color: var(--color-on-accent);
+    font-size: 0.8125rem;
+    font-weight: 600;
+  }
+
+  .plan__price {
+    margin: var(--space-2) 0 0;
+  }
+
+  .plan__amount {
+    font-size: 1.75rem;
+    font-weight: 700;
+  }
+
+  .plan__period {
+    color: var(--color-muted);
+  }
+
+  .plan__description {
+    margin: var(--space-1) 0 0;
+    color: var(--color-muted);
+  }
+
+  .plan__features {
+    flex: 1;
+    margin: var(--space-2) 0 0;
+    padding-left: 1.2rem;
+  }
+
+  .plan__cta {
+    margin-top: var(--space-3);
+  }
+
+  .prices__note {
+    margin: var(--space-3) 0 0;
+    color: var(--color-muted);
+    font-size: 0.9375rem;
+  }
+</style>

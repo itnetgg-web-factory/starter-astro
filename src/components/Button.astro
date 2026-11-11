@@ -1,0 +1,47 @@
+---
+// Lien présenté comme un bouton (appel à l'action).
+export interface Props {
+  href: string;
+  label: string;
+  variant?: 'primary' | 'secondary';
+}
+
+const { href, label, variant = 'primary' } = Astro.props;
+---
+
+<a class:list={['button', `button--${variant}`]} href={href}>{label}</a>
+
+<style>
+  .button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 2.75rem;
+    padding: 0.6rem 1.25rem;
+    border-radius: var(--radius);
+    border: 2px solid var(--color-accent);
+    font-weight: 600;
+    text-decoration: none;
+    transition: background-color 0.15s, color 0.15s;
+  }
+
+  .button--primary {
+    background: var(--color-accent);
+    color: var(--color-on-accent);
+  }
+
+  .button--primary:hover {
+    background: var(--color-accent-hover);
+    border-color: var(--color-accent-hover);
+    color: var(--color-on-accent);
+  }
+
+  .button--secondary {
+    background: transparent;
+    color: var(--color-accent);
+  }
+
+  .button--secondary:hover {
+    background: var(--color-surface-alt);
+  }
+</style>

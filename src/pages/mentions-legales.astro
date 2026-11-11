@@ -1,0 +1,23 @@
+---
+// Page modèle : à compléter pour chaque client (éditeur, hébergeur, directeur de publication).
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { site } from '../data/site';
+---
+
+<BaseLayout title={`Mentions légales | ${site.name}`} description={`Mentions légales du site ${site.name} : éditeur, hébergeur et propriété intellectuelle.`}>
+  <article class="container prose legal">
+    <h1>Mentions légales</h1>
+    <h2>Éditeur du site</h2>
+    <p>Raison sociale, forme juridique, adresse, numéro SIRET, directeur de la publication. À compléter.</p>
+    <h2>Hébergement</h2>
+    <p>Nom, adresse et contact de l'hébergeur. À compléter.</p>
+    <h2>Propriété intellectuelle</h2>
+    <p>Les textes et images de ce site sont protégés. Toute reproduction demande une autorisation préalable.</p>
+  </article>
+</BaseLayout>
+
+<style>
+  .legal {
+    padding-block: var(--space-5) 0;
+  }
+</style>

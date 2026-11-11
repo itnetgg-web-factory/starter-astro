@@ -1,0 +1,28 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Button from '../components/Button.astro';
+import { site } from '../data/site';
+---
+
+<BaseLayout title={`Page introuvable | ${site.name}`} description="Cette page n'existe pas ou a été déplacée." noindex>
+  <div class="container not-found">
+    <h1>Page introuvable</h1>
+    <p>Cette page n'existe pas ou a été déplacée. Voici où reprendre la visite :</p>
+    <ul>
+      {
+        site.nav.map((item) => (
+          <li>
+            <a href={item.href}>{item.label}</a>
+          </li>
+        ))
+      }
+    </ul>
+    <Button href="/" label="Retour à l'accueil" />
+  </div>
+</BaseLayout>
+
+<style>
+  .not-found {
+    padding-block: var(--space-5);
+  }
+</style>
