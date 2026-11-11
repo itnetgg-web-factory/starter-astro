@@ -1,0 +1,88 @@
+---
+// Coordonnées et appel à l'action de contact. Pas de formulaire : il demandera un service dédié.
+import Button from './Button.astro';
+
+export interface Props {
+  email: string;
+  phone?: string;
+  address?: string;
+  hours?: string;
+  ctaLabel?: string;
+}
+
+const { email, phone, address, hours, ctaLabel = 'Écrire un e-mail' } = Astro.props;
+const phoneHref = phone ? `tel:${phone.replace(/[^\d+]/g, '')}` : undefined;
+---
+
+<div class="contact">
+  <address class="contact__details">
+    <dl>
+      <div>
+        <dt>E-mail</dt>
+        <dd><a href={`mailto:${email}`}>{email}</a></dd>
+      </div>
+      {
+        phone && (
+          <div>
+            <dt>Téléphone</dt>
+            <dd>
+              <a href={phoneHref}>{phone}</a>
+            </dd>
+          </div>
+        )
+      }
+      {
+        address && (
+          <div>
+            <dt>Adresse</dt>
+            <dd>{address}</dd>
+          </div>
+        )
+      }
+      {
+        hours && (
+          <div>
+            <dt>Horaires</dt>
+            <dd>{hours}</dd>
+          </div>
+        )
+      }
+    </dl>
+  </address>
+  <div class="contact__cta">
+    <Button href={`mailto:${email}`} label={ctaLabel} />
+  </div>
+</div>
+
+<style>
+  .contact {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: var(--space-3);
+    padding: var(--space-3);
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius);
+  }
+
+  .contact__details {
+    font-style: normal;
+  }
+
+  .contact dl {
+    display: grid;
+    gap: var(--space-2);
+    margin: 0;
+  }
+
+  .contact dt {
+    font-weight: 600;
+  }
+
+  .contact dd {
+    margin: 0;
+    color: var(--color-muted);
+  }
+</style>

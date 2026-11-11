@@ -1,0 +1,69 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Hero from '../components/Hero.astro';
+import Section from '../components/Section.astro';
+import CardGrid from '../components/CardGrid.astro';
+import ServiceCard from '../components/ServiceCard.astro';
+import PriceList from '../components/PriceList.astro';
+import Testimonials from '../components/Testimonials.astro';
+import Gallery from '../components/Gallery.astro';
+import Contact from '../components/Contact.astro';
+import { site } from '../data/site';
+import {
+  seo,
+  hero,
+  phasesSection,
+  phases,
+  pricesSection,
+  plans,
+  pricesNote,
+  testimonialsSection,
+  testimonials,
+  gallerySection,
+  gallery,
+  contactSection,
+} from '../data/accueil';
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'Organization',
+  name: site.name,
+  url: Astro.site?.href,
+  email: site.contact.email,
+};
+---
+
+<BaseLayout title={seo.title} description={seo.description} jsonLd={jsonLd}>
+  <Hero {...hero} />
+
+  <Section id="phases" {...phasesSection}>
+    <CardGrid>
+      {
+        phases.map((phase, index) => (
+          <ServiceCard
+            number={index + 1}
+            title={phase.title}
+            description={phase.description}
+            items={phase.deliverables}
+          />
+        ))
+      }
+    </CardGrid>
+  </Section>
+
+  <Section id="formules" tone="alt" {...pricesSection}>
+    <PriceList plans={plans} note={pricesNote} />
+  </Section>
+
+  <Section id="temoignages" {...testimonialsSection}>
+    <Testimonials items={testimonials} />
+  </Section>
+
+  <Section id="galerie" tone="alt" {...gallerySection}>
+    <Gallery images={gallery} />
+  </Section>
+
+  <Section id="contact" {...contactSection}>
+    <Contact {...site.contact} />
+  </Section>
+</BaseLayout>

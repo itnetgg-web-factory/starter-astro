@@ -1,0 +1,23 @@
+---
+// Grille responsive de cartes (prestations, phases, formules).
+export interface Props {
+  min?: string;
+}
+
+const { min = '16rem' } = Astro.props;
+---
+
+<ul class="card-grid" style={`--card-min: ${min}`}>
+  <slot />
+</ul>
+
+<style>
+  .card-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, var(--card-min)), 1fr));
+    gap: var(--space-3);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+</style>

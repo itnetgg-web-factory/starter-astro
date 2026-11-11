@@ -1,0 +1,81 @@
+---
+// Carte de prestation ou d'étape. À placer dans un CardGrid.
+export interface Props {
+  title: string;
+  description: string;
+  number?: number;
+  items?: string[];
+  itemsLabel?: string;
+}
+
+const { title, description, number, items = [], itemsLabel = 'Livrables' } = Astro.props;
+---
+
+<li class="card">
+  {
+    number !== undefined && (
+      <p class="card__number" aria-hidden="true">
+        {String(number).padStart(2, '0')}
+      </p>
+    )
+  }
+  <h3 class="card__title">
+    {number !== undefined && <span class="visually-hidden">Étape {number} : </span>}
+    {title}
+  </h3>
+  <p class="card__description">{description}</p>
+  {
+    items.length > 0 && (
+      <>
+        <p class="card__label">{itemsLabel}</p>
+        <ul class="card__items">
+          {items.map((item) => (
+            <li>{item}</li>
+          ))}
+        </ul>
+      </>
+    )
+  }
+</li>
+
+<style>
+  .card {
+    display: flex;
+    flex-direction: column;
+    padding: var(--space-3);
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+  }
+
+  .card__number {
+    margin: 0;
+    font-size: 0.875rem;
+    font-weight: 700;
+    color: var(--color-accent);
+    letter-spacing: 0.08em;
+  }
+
+  .card__title {
+    margin: var(--space-1) 0 0;
+    font-size: 1.25rem;
+  }
+
+  .card__description {
+    margin: var(--space-1) 0 0;
+    color: var(--color-muted);
+  }
+
+  .card__label {
+    margin: var(--space-2) 0 0;
+    font-size: 0.875rem;
+    font-weight: 600;
+  }
+
+  .card__items {
+    margin: 0.25rem 0 0;
+    padding-left: 1.2rem;
+    font-size: 0.9375rem;
+  }
+</style>
