@@ -3,8 +3,8 @@
 export interface Props {
   id: string;
   title: string;
-  intro?: string;
-  tone?: 'default' | 'alt';
+  intro?: string | undefined;
+  tone?: 'default' | 'alt' | undefined;
 }
 
 const { id, title, intro, tone = 'default' } = Astro.props;

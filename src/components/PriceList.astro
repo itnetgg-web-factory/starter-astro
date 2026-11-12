@@ -6,16 +6,16 @@ import type { Props as ButtonProps } from './Button.astro';
 export interface Plan {
   name: string;
   price: string;
-  period?: string;
+  period?: string | undefined;
   description: string;
   features: string[];
-  highlighted?: boolean;
-  cta?: ButtonProps;
+  highlighted?: boolean | undefined;
+  cta?: ButtonProps | undefined;
 }
 
 export interface Props {
   plans: Plan[];
-  note?: string;
+  note?: string | undefined;
 }
 
 const { plans, note } = Astro.props;

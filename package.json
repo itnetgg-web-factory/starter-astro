@@ -11,7 +11,8 @@
     "build": "astro build",
     "preview": "astro preview",
     "check": "astro check",
-    "verify": "astro check && astro build",
+    "test": "node --test tests/",
+    "verify": "astro check && node --test tests/ && astro build",
     "astro": "astro"
   },
   "dependencies": {

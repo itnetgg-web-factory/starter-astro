@@ -1,0 +1,13 @@
+name: "Accompagnement"
+price: "49 €"
+period: "HT par mois"
+description: "Mises à jour techniques, sauvegardes et petites évolutions."
+features:
+  - "Surveillance et sauvegardes"
+  - "Une heure de modifications par mois"
+highlighted: false
+cta:
+  label: "En savoir plus"
+  href: "#contact"
+order: 3
+published: true

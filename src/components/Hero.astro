@@ -6,8 +6,8 @@ import type { Props as ButtonProps } from './Button.astro';
 export interface Props {
   title: string;
   lead: string;
-  eyebrow?: string;
-  actions?: ButtonProps[];
+  eyebrow?: string | undefined;
+  actions?: ButtonProps[] | undefined;
 }
 
 const { title, lead, eyebrow, actions = [] } = Astro.props;

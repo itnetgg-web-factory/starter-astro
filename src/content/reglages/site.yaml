@@ -1,0 +1,21 @@
+name: Mémento du site web
+locale: fr_FR
+nav:
+  - label: Les phases
+    href: /#phases
+  - label: Formules
+    href: /#formules
+  - label: Exemples
+    href: /#galerie
+  - label: Contact
+    href: /#contact
+legalLinks:
+  - label: Mentions légales
+    href: /mentions-legales
+  - label: Confidentialité
+    href: /confidentialite
+footerNote: Site de démonstration du modèle starter-astro.
+contact:
+  email: contact@example.com
+  phone: 01 23 45 67 89
+  hours: Du lundi au vendredi, de 9 h à 18 h

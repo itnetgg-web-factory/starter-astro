@@ -1,0 +1,8 @@
+title: Mise en ligne
+description: "Publier le site sur son domaine, avec une sauvegarde et un retour arrière prêts."
+deliverables:
+  - "Site en production"
+  - "Redirections"
+  - "Suivi des visites"
+order: 6
+published: true

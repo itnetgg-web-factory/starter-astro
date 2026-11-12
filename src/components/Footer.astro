@@ -5,7 +5,7 @@ import type { NavItem } from './Header.astro';
 export interface Props {
   siteName: string;
   links: NavItem[];
-  note?: string;
+  note?: string | undefined;
 }
 
 const { siteName, links, note } = Astro.props;

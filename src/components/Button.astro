@@ -3,7 +3,7 @@
 export interface Props {
   href: string;
   label: string;
-  variant?: 'primary' | 'secondary';
+  variant?: 'primary' | 'secondary' | undefined;
 }
 
 const { href, label, variant = 'primary' } = Astro.props;

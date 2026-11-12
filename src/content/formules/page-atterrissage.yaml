@@ -1,0 +1,14 @@
+name: "Page d'atterrissage"
+price: "1 200 €"
+period: "HT"
+description: "Une page unique pour présenter une offre et recevoir des demandes."
+features:
+  - "Une page, cinq sections"
+  - "Contenus modifiables"
+  - "Mise en ligne incluse"
+highlighted: false
+cta:
+  label: "Demander un devis"
+  href: "#contact"
+order: 1
+published: true
