@@ -4,10 +4,10 @@ import Button from './Button.astro';
 
 export interface Props {
   email: string;
-  phone?: string;
-  address?: string;
-  hours?: string;
-  ctaLabel?: string;
+  phone?: string | undefined;
+  address?: string | undefined;
+  hours?: string | undefined;
+  ctaLabel?: string | undefined;
 }
 
 const { email, phone, address, hours, ctaLabel = 'Écrire un e-mail' } = Astro.props;

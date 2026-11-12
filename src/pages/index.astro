@@ -8,21 +8,15 @@ import PriceList from '../components/PriceList.astro';
 import Testimonials from '../components/Testimonials.astro';
 import Gallery from '../components/Gallery.astro';
 import Contact from '../components/Contact.astro';
-import { site } from '../data/site';
-import {
-  seo,
-  hero,
-  phasesSection,
-  phases,
-  pricesSection,
-  plans,
-  pricesNote,
-  testimonialsSection,
-  testimonials,
-  gallerySection,
-  gallery,
-  contactSection,
-} from '../data/accueil';
+import { getHome, getPublished, getSettings } from '../lib/contenus';
+
+const [site, home, services, plans, testimonials] = await Promise.all([
+  getSettings(),
+  getHome(),
+  getPublished('prestations'),
+  getPublished('formules'),
+  getPublished('temoignages'),
+]);
 
 const jsonLd = {
   '@context': 'https://schema.org',
@@ -33,37 +27,51 @@ const jsonLd = {
 };
 ---
 
-<BaseLayout title={seo.title} description={seo.description} jsonLd={jsonLd}>
-  <Hero {...hero} />
+<BaseLayout title={home.seo.title} description={home.seo.description} jsonLd={jsonLd}>
+  <Hero {...home.hero} />
 
-  <Section id="phases" {...phasesSection}>
-    <CardGrid>
-      {
-        phases.map((phase, index) => (
-          <ServiceCard
-            number={index + 1}
-            title={phase.title}
-            description={phase.description}
-            items={phase.deliverables}
-          />
-        ))
-      }
-    </CardGrid>
-  </Section>
+  {
+    services.length > 0 && (
+      <Section id="phases" {...home.phases}>
+        <CardGrid>
+          {services.map((service, index) => (
+            <ServiceCard
+              number={index + 1}
+              title={service.title}
+              description={service.description}
+              items={service.deliverables}
+            />
+          ))}
+        </CardGrid>
+      </Section>
+    )
+  }
 
-  <Section id="formules" tone="alt" {...pricesSection}>
-    <PriceList plans={plans} note={pricesNote} />
-  </Section>
+  {
+    plans.length > 0 && (
+      <Section id="formules" tone="alt" title={home.plans.title} intro={home.plans.intro}>
+        <PriceList plans={plans} note={home.plans.note} />
+      </Section>
+    )
+  }
 
-  <Section id="temoignages" {...testimonialsSection}>
-    <Testimonials items={testimonials} />
-  </Section>
+  {
+    testimonials.length > 0 && (
+      <Section id="temoignages" {...home.testimonials}>
+        <Testimonials items={testimonials} />
+      </Section>
+    )
+  }
 
-  <Section id="galerie" tone="alt" {...gallerySection}>
-    <Gallery images={gallery} />
-  </Section>
+  {
+    home.gallery.images.length > 0 && (
+      <Section id="galerie" tone="alt" title={home.gallery.title} intro={home.gallery.intro}>
+        <Gallery images={home.gallery.images} />
+      </Section>
+    )
+  }
 
-  <Section id="contact" {...contactSection}>
+  <Section id="contact" {...home.contact}>
     <Contact {...site.contact} />
   </Section>
 </BaseLayout>

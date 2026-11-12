@@ -1,7 +1,9 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Button from '../components/Button.astro';
-import { site } from '../data/site';
+import { getSettings } from '../lib/contenus';
+
+const site = await getSettings();
 ---
 
 <BaseLayout title={`Page introuvable | ${site.name}`} description="Cette page n'existe pas ou a été déplacée." noindex>

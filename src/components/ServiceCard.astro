@@ -3,9 +3,9 @@
 export interface Props {
   title: string;
   description: string;
-  number?: number;
-  items?: string[];
-  itemsLabel?: string;
+  number?: number | undefined;
+  items?: string[] | undefined;
+  itemsLabel?: string | undefined;
 }
 
 const { title, description, number, items = [], itemsLabel = 'Livrables' } = Astro.props;

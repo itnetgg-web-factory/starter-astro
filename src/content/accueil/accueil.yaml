@@ -1,0 +1,48 @@
+seo:
+  title: "Mémento des phases de création d'un site web, pas à pas"
+  description: "Cadrage, conception, contenus, réalisation, recette, mise en ligne et suivi : les sept phases pour créer un site web clair, rapide et facile à faire vivre."
+hero:
+  eyebrow: Mémento
+  title: "Les phases de création d'un site web"
+  lead: "Sept étapes, de la première idée au site qui vit sans vous solliciter. Pour savoir à tout moment où en est votre projet et ce qu'il reste à décider."
+  actions:
+    - label: Découvrir les phases
+      href: "#phases"
+    - label: Nous contacter
+      href: "#contact"
+      variant: secondary
+phases:
+  title: Sept phases, un fil conducteur
+  intro: Chaque phase se termine par un livrable vérifiable. On ne passe à la suivante que lorsque le livrable est validé.
+plans:
+  title: Trois formules pour démarrer
+  intro: Le périmètre se fixe au cadrage. Les montants ci-dessous illustrent le composant de tarifs.
+  note: Montants fictifs, affichés pour la démonstration.
+testimonials:
+  title: Ils ont suivi la méthode
+  intro: Témoignages fictifs, affichés pour la démonstration du composant.
+gallery:
+  title: Les phases en images
+  intro: Illustrations abstraites générées pour la démonstration de la galerie.
+  images:
+    - src: ../../assets/images/cadrage.jpg
+      alt: Illustration abstraite de cercles bleus superposés
+      caption: Cadrage
+    - src: ../../assets/images/conception.jpg
+      alt: Illustration abstraite de cercles verts superposés
+      caption: Conception
+    - src: ../../assets/images/contenus.jpg
+      alt: Illustration abstraite de cercles orangés superposés
+      caption: Contenus
+    - src: ../../assets/images/realisation.jpg
+      alt: Illustration abstraite de cercles violets superposés
+      caption: Réalisation
+    - src: ../../assets/images/recette.jpg
+      alt: Illustration abstraite de cercles roses superposés
+      caption: Recette
+    - src: ../../assets/images/mise-en-ligne.jpg
+      alt: Illustration abstraite de cercles bleu-gris superposés
+      caption: Mise en ligne
+contact:
+  title: Parlons de votre projet
+  intro: Une question sur une phase, un projet à cadrer ? Écrivez-nous, réponse sous deux jours ouvrés.

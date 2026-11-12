@@ -1,0 +1,14 @@
+name: "Site vitrine"
+price: "2 400 €"
+period: "HT"
+description: "Quelques pages pour présenter votre activité, vos prestations et vos tarifs."
+features:
+  - "Jusqu'à six pages"
+  - "Galerie et témoignages"
+  - "Référencement de base"
+highlighted: true
+cta:
+  label: "Demander un devis"
+  href: "#contact"
+order: 2
+published: true

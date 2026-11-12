@@ -1,0 +1,43 @@
+---
+// Pages simples rédigées en Markdown dans src/content/pages/ (mentions légales, confidentialité…).
+import type { GetStaticPaths } from 'astro';
+import { getCollection, render } from 'astro:content';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { getSettings } from '../lib/contenus';
+
+export const getStaticPaths = (async () => {
+  const pages = await getCollection('pages');
+  return pages.map((entry) => ({ params: { page: entry.id }, props: { entry } }));
+}) satisfies GetStaticPaths;
+
+const { entry } = Astro.props;
+const { Content } = await render(entry);
+const site = await getSettings();
+const updated = entry.data.updated;
+---
+
+<BaseLayout title={`${entry.data.title} | ${site.name}`} description={entry.data.description}>
+  <article class="container prose page">
+    <h1>{entry.data.title}</h1>
+    <Content />
+    {
+      updated && (
+        <p class="page__updated">
+          Mise à jour : <time datetime={updated.toISOString().slice(0, 10)}>{updated.toLocaleDateString('fr-FR', { dateStyle: 'long', timeZone: 'UTC' })}</time>
+        </p>
+      )
+    }
+  </article>
+</BaseLayout>
+
+<style>
+  .page {
+    padding-block: var(--space-5) 0;
+  }
+
+  .page__updated {
+    margin-top: var(--space-4);
+    color: var(--color-muted);
+    font-size: 0.9375rem;
+  }
+</style>
