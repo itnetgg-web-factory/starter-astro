@@ -25,22 +25,22 @@ gallery:
   title: Les phases en images
   intro: Illustrations abstraites générées pour la démonstration de la galerie.
   images:
-    - src: ../../assets/images/cadrage.jpg
+    - src: "@assets/images/cadrage.jpg"
       alt: Illustration abstraite de cercles bleus superposés
       caption: Cadrage
-    - src: ../../assets/images/conception.jpg
+    - src: "@assets/images/conception.jpg"
       alt: Illustration abstraite de cercles verts superposés
       caption: Conception
-    - src: ../../assets/images/contenus.jpg
+    - src: "@assets/images/contenus.jpg"
       alt: Illustration abstraite de cercles orangés superposés
       caption: Contenus
-    - src: ../../assets/images/realisation.jpg
+    - src: "@assets/images/realisation.jpg"
       alt: Illustration abstraite de cercles violets superposés
       caption: Réalisation
-    - src: ../../assets/images/recette.jpg
+    - src: "@assets/images/recette.jpg"
       alt: Illustration abstraite de cercles roses superposés
       caption: Recette
-    - src: ../../assets/images/mise-en-ligne.jpg
+    - src: "@assets/images/mise-en-ligne.jpg"
       alt: Illustration abstraite de cercles bleu-gris superposés
       caption: Mise en ligne
 contact:

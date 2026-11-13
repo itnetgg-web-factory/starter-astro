@@ -13,6 +13,8 @@
     "check": "astro check",
     "test": "node --test tests/",
     "verify": "astro check && node --test tests/ && astro build",
+    "cms:local": "npx --yes decap-server@3.11.6",
+    "worker:dev": "astro build && wrangler dev",
     "astro": "astro"
   },
   "dependencies": {
@@ -21,6 +23,7 @@
   },
   "devDependencies": {
     "@astrojs/check": "0.9.12",
-    "typescript": "6.0.3"
+    "typescript": "6.0.3",
+    "wrangler": "4.157.0"
   }
 }

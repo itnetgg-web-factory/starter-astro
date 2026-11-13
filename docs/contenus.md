@@ -1,12 +1,13 @@
 # Contenus éditables
 
-Les contenus vivent dans `src/content/`, un dossier par collection. Les schémas sont dans `src/schemas/contenus.ts` et la déclaration des collections dans `src/content.config.ts`. Ce document sert de référence pour la configuration de Decap CMS (bloc Astro 3/4).
+Les contenus vivent dans `src/content/`, un dossier par collection. Les schémas sont dans `src/schemas/contenus.ts` et la déclaration des collections dans `src/content.config.ts`. La configuration de Decap CMS (`public/admin/config.yml`) suit ce document ; son fonctionnement est décrit dans [`decap.md`](decap.md).
 
 ## Règles communes
 
+- **Champs vides** : un champ facultatif effacé dans Decap (`""` ou bouton vide) est traité comme absent.
 - **Validation stricte** : un champ obligatoire manquant, un champ inconnu (faute de frappe), un texte vide, un lien non conforme ou une image introuvable font échouer le build. Le site en ligne n'est donc jamais remplacé par une version cassée.
 - **Liens acceptés** : `/page`, `#ancre`, `https://…`, `mailto:…`, `tel:…`. Le `http://` et le `javascript:` sont refusés.
-- **Images** : dans `src/assets/images/`, référencées depuis un contenu par un chemin relatif (`../../assets/images/photo.jpg`). Texte alternatif obligatoire. Astro les convertit en WebP en plusieurs tailles.
+- **Images** : dans `src/assets/images/`, référencées depuis un contenu par l'alias `@assets/images/photo.jpg` (défini dans `tsconfig.json`, compris par Astro et par Decap). Texte alternatif obligatoire. Astro les convertit en WebP en plusieurs tailles.
 - **Listes** (prestations, formules, témoignages) : un fichier par élément, trié par `order` (entier de 1 à 99), masqué si `published: false`. Une section dont la liste est vide n'est pas affichée.
 
 ## Collections

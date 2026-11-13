@@ -5,6 +5,19 @@ import { z } from 'astro/zod';
 /** Texte obligatoire, espaces retirés, longueur maximale. */
 const text = (max: number) => z.string().trim().min(1).max(max);
 
+/**
+ * Valeur vide envoyée par Decap CMS quand un champ facultatif est effacé : `""`, ou objet dont
+ * tous les champs sont vides. Elle est traitée comme absente plutôt que de faire échouer le build.
+ */
+const isEmpty = (value: unknown): boolean =>
+  value === null ||
+  value === undefined ||
+  (typeof value === 'string' && value.trim() === '') ||
+  (typeof value === 'object' && !Array.isArray(value) && Object.values(value).every(isEmpty));
+
+const optional = <T extends z.ZodType>(schema: T) =>
+  z.preprocess((value) => (isEmpty(value) ? undefined : value), schema.optional());
+
 /** Lien interne (/…, #…), externe en HTTPS, e-mail ou téléphone. */
 const href = z
   .string()
@@ -19,7 +32,7 @@ const link = z.strictObject({
 const button = z.strictObject({
   label: text(40),
   href,
-  variant: z.enum(['primary', 'secondary']).optional(),
+  variant: optional(z.enum(['primary', 'secondary'])),
 });
 
 /** Référencement : bornes larges pour ne pas bloquer le client, cibles du standard SEO dans les consignes Decap. */
@@ -30,7 +43,7 @@ const seo = z.strictObject({
 
 const sectionIntro = z.strictObject({
   title: text(80),
-  intro: text(300).optional(),
+  intro: optional(text(300)),
 });
 
 /** Champs communs aux éléments de liste (prestations, formules, témoignages). */
@@ -44,12 +57,12 @@ export const settingsSchema = z.strictObject({
   locale: z.string().regex(/^[a-z]{2}_[A-Z]{2}$/, 'Format attendu : fr_FR'),
   nav: z.array(link).min(1).max(7),
   legalLinks: z.array(link).max(5),
-  footerNote: text(200).optional(),
+  footerNote: optional(text(200)),
   contact: z.strictObject({
     email: z.email(),
-    phone: text(30).optional(),
-    address: text(200).optional(),
-    hours: text(120).optional(),
+    phone: optional(text(30)),
+    address: optional(text(200)),
+    hours: optional(text(120)),
   }),
 });
 
@@ -58,13 +71,13 @@ export const homeSchema = <T extends z.ZodType>(image: () => T) =>
   z.strictObject({
     seo,
     hero: z.strictObject({
-      eyebrow: text(40).optional(),
+      eyebrow: optional(text(40)),
       title: text(90),
       lead: text(300),
       actions: z.array(button).max(2).default([]),
     }),
     phases: sectionIntro,
-    plans: z.strictObject({ ...sectionIntro.shape, note: text(200).optional() }),
+    plans: z.strictObject({ ...sectionIntro.shape, note: optional(text(200)) }),
     testimonials: sectionIntro,
     gallery: z.strictObject({
       ...sectionIntro.shape,
@@ -73,7 +86,7 @@ export const homeSchema = <T extends z.ZodType>(image: () => T) =>
           z.strictObject({
             src: image(),
             alt: text(200),
-            caption: text(80).optional(),
+            caption: optional(text(80)),
           }),
         )
         .max(24),
@@ -91,23 +104,23 @@ export const serviceSchema = z.strictObject({
 export const planSchema = z.strictObject({
   name: text(40),
   price: text(20),
-  period: text(30).optional(),
+  period: optional(text(30)),
   description: text(200),
   features: z.array(text(100)).min(1).max(10),
   highlighted: z.boolean().default(false),
-  cta: link.optional(),
+  cta: optional(link),
   ...listItem,
 });
 
 export const testimonialSchema = z.strictObject({
   quote: text(400),
   author: text(60),
-  role: text(100).optional(),
+  role: optional(text(100)),
   ...listItem,
 });
 
 export const pageSchema = z.strictObject({
   title: text(80),
   description: z.string().trim().min(50).max(170),
-  updated: z.coerce.date().optional(),
+  updated: optional(z.coerce.date()),
 });
