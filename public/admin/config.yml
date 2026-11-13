@@ -1,0 +1,210 @@
+# Configuration de Decap CMS. Référence des champs et des limites : docs/contenus.md.
+# Les limites de longueur et les formats sont aussi vérifiés au build par src/schemas/contenus.ts.
+
+backend:
+  name: github
+  repo: itnetgg-web-factory/starter-astro # À remplacer par le dépôt du client
+  branch: main
+  # base_url est fixé dans demarrage.js (adresse du site). Le Worker sert /oauth/authorize et /oauth/redirect.
+  auth_endpoint: oauth/authorize
+  squash_merges: true
+  commit_messages:
+    create: "Contenu : création de {{collection}} « {{slug}} »"
+    update: "Contenu : modification de {{collection}} « {{slug}} »"
+    delete: "Contenu : suppression de {{collection}} « {{slug}} »"
+    uploadMedia: "Contenu : ajout de l'image « {{path}} »"
+    deleteMedia: "Contenu : suppression de l'image « {{path}} »"
+
+# Brouillon, relecture, publication : chaque modification passe par une pull request
+# que les contrôles CI valident avant la publication.
+publish_mode: editorial_workflow
+
+# En local seulement : avec `npm run cms:local`, Decap modifie les fichiers du disque, sans GitHub.
+local_backend: true
+
+locale: fr
+site_url: /
+display_url: /
+logo_url: /favicon.svg
+
+media_folder: src/assets/images
+public_folder: "@assets/images" # alias Astro défini dans tsconfig.json
+
+collections:
+  - name: reglages
+    label: Réglages du site
+    editor: { preview: false }
+    files:
+      - name: site
+        label: Réglages généraux
+        file: src/content/reglages/site.yaml
+        fields:
+          - { name: name, label: Nom du site, widget: string, hint: "60 caractères maximum." }
+          - { name: locale, label: Langue, widget: hidden, default: fr_FR }
+          - name: nav
+            label: Menu principal
+            widget: list
+            min: 1
+            max: 7
+            summary: "{{fields.label}}"
+            fields: &lien
+              - { name: label, label: Texte du lien, widget: string, hint: "40 caractères maximum." }
+              - name: href
+                label: Adresse
+                widget: string
+                hint: "/page, #section, https://…, mailto:… ou tel:…"
+                pattern: ['^(/|#|https://|mailto:|tel:)', "Lien attendu : /page, #section, https://…, mailto: ou tel:"]
+          - { name: legalLinks, label: Liens du pied de page, widget: list, max: 5, summary: "{{fields.label}}", fields: *lien }
+          - { name: footerNote, label: Mention du pied de page, widget: string, required: false }
+          - name: contact
+            label: Coordonnées
+            widget: object
+            fields:
+              - { name: email, label: E-mail, widget: string, pattern: ['^[^@\s]+@[^@\s]+\.[^@\s]+$', "Adresse e-mail attendue"] }
+              - { name: phone, label: Téléphone, widget: string, required: false }
+              - { name: address, label: Adresse postale, widget: string, required: false }
+              - { name: hours, label: Horaires, widget: string, required: false }
+
+  - name: accueil
+    label: Page d'accueil
+    editor: { preview: false }
+    files:
+      - name: accueil
+        label: Page d'accueil
+        file: src/content/accueil/accueil.yaml
+        fields:
+          - name: seo
+            label: Référencement
+            widget: object
+            collapsed: true
+            fields:
+              - { name: title, label: Titre de l'onglet et des moteurs, widget: string, hint: "Idéalement 50 à 60 caractères (10 à 70 acceptés)." }
+              - { name: description, label: Description pour les moteurs, widget: text, hint: "Idéalement 140 à 160 caractères (50 à 170 acceptés)." }
+          - name: hero
+            label: Présentation
+            widget: object
+            fields:
+              - { name: eyebrow, label: Surtitre, widget: string, required: false }
+              - { name: title, label: Titre principal, widget: string, hint: "90 caractères maximum." }
+              - { name: lead, label: Accroche, widget: text, hint: "300 caractères maximum." }
+              - name: actions
+                label: Boutons
+                widget: list
+                required: false
+                max: 2
+                summary: "{{fields.label}}"
+                fields:
+                  - { name: label, label: Texte du bouton, widget: string }
+                  - { name: href, label: Adresse, widget: string, pattern: ['^(/|#|https://|mailto:|tel:)', "Lien attendu : /page, #section, https://…, mailto: ou tel:"] }
+                  - { name: variant, label: Style, widget: select, required: false, options: [{ label: Principal, value: primary }, { label: Secondaire, value: secondary }] }
+          - { name: phases, label: Section « Étapes », widget: object, collapsed: true, fields: &intro [{ name: title, label: Titre, widget: string }, { name: intro, label: Introduction, widget: text, required: false }] }
+          - name: plans
+            label: Section « Formules »
+            widget: object
+            collapsed: true
+            fields:
+              - { name: title, label: Titre, widget: string }
+              - { name: intro, label: Introduction, widget: text, required: false }
+              - { name: note, label: Note sous les tarifs, widget: string, required: false }
+          - { name: testimonials, label: Section « Témoignages », widget: object, collapsed: true, fields: *intro }
+          - name: gallery
+            label: Section « Galerie »
+            widget: object
+            collapsed: true
+            fields:
+              - { name: title, label: Titre, widget: string }
+              - { name: intro, label: Introduction, widget: text, required: false }
+              - name: images
+                label: Images
+                widget: list
+                max: 24
+                summary: "{{fields.caption}}"
+                fields:
+                  - { name: src, label: Image, widget: image, choose_url: false, hint: "JPEG, PNG ou WebP. Astro crée les tailles adaptées." }
+                  - { name: alt, label: Description de l'image (accessibilité), widget: string, hint: "Obligatoire : décrire ce que montre l'image." }
+                  - { name: caption, label: Légende, widget: string, required: false }
+          - { name: contact, label: Section « Contact », widget: object, collapsed: true, fields: *intro }
+
+  - name: prestations
+    label: Étapes et prestations
+    label_singular: étape
+    folder: src/content/prestations
+    extension: yaml
+    format: yaml
+    create: true
+    slug: "{{slug}}"
+    identifier_field: title
+    summary: "{{order}}. {{title}}"
+    sortable_fields: [{ field: order, label: Ordre, default_sort: asc }, title]
+    editor: { preview: false }
+    fields:
+      - { name: title, label: Titre, widget: string, hint: "60 caractères maximum." }
+      - { name: description, label: Description, widget: text, hint: "300 caractères maximum." }
+      - { name: deliverables, label: Livrables, widget: list, required: false, max: 8, field: { name: item, label: Livrable, widget: string } }
+      - &ordre { name: order, label: Ordre d'affichage, widget: number, value_type: int, min: 1, max: 99, default: 1 }
+      - &publie { name: published, label: Publié, widget: boolean, default: true }
+
+  - name: formules
+    label: Formules et tarifs
+    label_singular: formule
+    folder: src/content/formules
+    extension: yaml
+    format: yaml
+    create: true
+    slug: "{{slug}}"
+    identifier_field: name
+    summary: "{{order}}. {{name}} : {{price}}"
+    sortable_fields: [{ field: order, label: Ordre, default_sort: asc }, name]
+    editor: { preview: false }
+    fields:
+      - { name: name, label: Nom de la formule, widget: string, hint: "40 caractères maximum." }
+      - { name: price, label: Prix, widget: string, hint: "Tel qu'affiché, ex. 1 200 €" }
+      - { name: period, label: Précision du prix, widget: string, required: false, hint: "ex. HT, HT par mois" }
+      - { name: description, label: Description, widget: text, hint: "200 caractères maximum." }
+      - { name: features, label: Ce qui est inclus, widget: list, min: 1, max: 10, field: { name: item, label: Élément, widget: string } }
+      - { name: highlighted, label: Formule mise en avant, widget: boolean, default: false }
+      - name: cta
+        label: Bouton
+        widget: object
+        required: false
+        collapsed: true
+        fields:
+          - { name: label, label: Texte du bouton, widget: string, required: false }
+          - { name: href, label: Adresse, widget: string, required: false, pattern: ['^$|^(/|#|https://|mailto:|tel:)', "Lien attendu : /page, #section, https://…, mailto: ou tel:"] }
+      - *ordre
+      - *publie
+
+  - name: temoignages
+    label: Témoignages
+    label_singular: témoignage
+    folder: src/content/temoignages
+    extension: yaml
+    format: yaml
+    create: true
+    slug: "{{slug}}"
+    identifier_field: author
+    summary: "{{order}}. {{author}}"
+    sortable_fields: [{ field: order, label: Ordre, default_sort: asc }, author]
+    editor: { preview: false }
+    fields:
+      - { name: quote, label: Citation, widget: text, hint: "400 caractères maximum, sans guillemets : ils sont ajoutés à l'affichage." }
+      - { name: author, label: Auteur, widget: string }
+      - { name: role, label: Fonction ou contexte, widget: string, required: false }
+      - *ordre
+      - *publie
+
+  - name: pages
+    label: Pages simples
+    label_singular: page
+    folder: src/content/pages
+    extension: md
+    format: frontmatter
+    create: true
+    slug: "{{slug}}"
+    identifier_field: title
+    editor: { preview: false }
+    fields:
+      - { name: title, label: Titre, widget: string }
+      - { name: description, label: Description pour les moteurs, widget: text, hint: "50 à 170 caractères." }
+      - { name: updated, label: Date de mise à jour, widget: datetime, required: false, format: YYYY-MM-DD, date_format: DD/MM/YYYY, time_format: false }
+      - { name: body, label: Contenu, widget: markdown, hint: "Commencer les intertitres au niveau 2 : le titre de la page est ajouté automatiquement.", buttons: [bold, italic, link, heading-two, heading-three, bulleted-list, numbered-list, quote] }

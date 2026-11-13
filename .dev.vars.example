@@ -1,0 +1,9 @@
+# Variables du Worker pour `npm run worker:dev`. Copier en .dev.vars (ignoré par Git) et compléter.
+# Ne jamais mettre de vraie valeur dans ce fichier d'exemple.
+
+# GitHub App du site : Settings > Developer settings > GitHub Apps > (l'application)
+GITHUB_CLIENT_ID=
+GITHUB_CLIENT_SECRET=
+
+# Domaines autorisés à recevoir un jeton. En local, Decap annonce demo.decapcms.org.
+ALLOWED_DOMAINS=localhost, demo.decapcms.org

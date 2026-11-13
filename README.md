@@ -2,7 +2,7 @@
 
 Modèle de la **filière B** de l'usine `itnetgg-web-factory` : site statique Astro, contenus éditables avec Decap CMS, déploiement sur Cloudflare Workers via GitHub Actions.
 
-> État : composants (Astro 1/4) et contenus validés par schémas (Astro 2/4) en place. Decap CMS et déploiement Cloudflare arrivent aux blocs Astro 3/4 et 4/4.
+> État : composants (Astro 1/4), contenus validés par schémas (Astro 2/4) et Decap CMS (Astro 3/4) en place. Le déploiement Cloudflare arrive au bloc Astro 4/4.
 
 ## Pour qui
 
@@ -26,6 +26,8 @@ npm run dev       # http://localhost:4321
 npm test          # tests des schémas de contenus
 npm run verify    # astro check + tests + build, comme la CI
 npm run preview   # sert le site construit (dist/)
+npm run cms:local # avec npm run dev : Decap sur /admin, sans GitHub
+npm run worker:dev # site + /admin + connexion GitHub sur http://localhost:8787
 ```
 
 Node.js : version indiquée dans `.nvmrc`. Variables : voir `.env.example`.
@@ -44,7 +46,8 @@ src/
   pages/        accueil, pages Markdown ([page].astro), 404, robots.txt
   styles/       jetons de design (couleurs, espacements), thème clair et sombre
 public/
-  admin/        interface Decap CMS (bloc 3/4)
+  admin/        interface Decap CMS (voir docs/decap.md)
+worker/         authentification GitHub de Decap (routes /oauth/*)
 ```
 
 ## Composants
@@ -64,6 +67,10 @@ Chaque section est un composant paramétré par ses props, sans texte client cod
 ## Contenus
 
 Tous les textes, images et tarifs sont dans `src/content/`, validés au build par des schémas stricts : un champ manquant, inconnu ou mal formé, ou une image introuvable, fait échouer le build. Détail des collections et de leurs champs : [`docs/contenus.md`](docs/contenus.md).
+
+## Édition par le client
+
+Decap CMS sur `/admin`, connexion GitHub par une GitHub App propre au site, publication par pull request validée par la CI : voir [`docs/decap.md`](docs/decap.md).
 
 ## Indexation
 

@@ -1,0 +1,17 @@
+// Worker du site : sert les fichiers construits (dist/) et l'authentification de Decap CMS.
+// Seules les routes /oauth/* exécutent du code ; tout le reste est servi comme fichiers statiques.
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "starter-astro",
+  "main": "worker/oauth.js",
+  "compatibility_date": "2026-11-01",
+  "assets": {
+    "directory": "./dist",
+    "not_found_handling": "404-page",
+    "html_handling": "auto-trailing-slash",
+    "run_worker_first": ["/oauth/*"]
+  },
+  "observability": {
+    "enabled": true
+  }
+}

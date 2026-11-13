@@ -110,3 +110,18 @@ test('ordre d’affichage : entier positif', () => {
   rejects(serviceSchema, { ...validService, order: 0 });
   rejects(serviceSchema, { ...validService, order: 1.5 });
 });
+
+test('un champ facultatif vidé dans Decap ("" ou objet vide) est traité comme absent', () => {
+  const testimonial = testimonialSchema.parse({ ...validTestimonial, role: '' });
+  assert.equal(testimonial.role, undefined);
+  const plan = planSchema.parse({ ...validPlan, period: '  ', cta: { label: '', href: '' } });
+  assert.equal(plan.period, undefined);
+  assert.equal(plan.cta, undefined);
+  assert.equal(pageSchema.parse({ ...validPage, updated: '' }).updated, undefined);
+  accepts(home, { ...validHome, hero: { ...validHome.hero, actions: [{ label: 'Voir', href: '#a', variant: '' }] } });
+});
+
+test('un champ obligatoire vidé reste refusé, et un objet à moitié rempli aussi', () => {
+  rejects(serviceSchema, { ...validService, title: '' });
+  rejects(planSchema, { ...validPlan, cta: { label: 'Devis', href: '' } });
+});
