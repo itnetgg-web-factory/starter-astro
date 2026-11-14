@@ -6,4 +6,5 @@ GITHUB_CLIENT_ID=
 GITHUB_CLIENT_SECRET=
 
 # Domaines autorisés à recevoir un jeton. En local, Decap annonce demo.decapcms.org.
+# Remplace la valeur de wrangler.jsonc (domaine du site en ligne).
 ALLOWED_DOMAINS=localhost, demo.decapcms.org

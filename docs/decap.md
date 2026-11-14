@@ -32,7 +32,7 @@ L'authentification passe par une **GitHub App** propre au site, installée sur l
 6. Where can this GitHub App be installed : **Only on this account**.
 7. Créer, noter le **Client ID**, générer un **client secret**.
 8. **Install App** > l'organisation > *Only select repositories* > le dépôt du site.
-9. Renseigner `GITHUB_CLIENT_ID`, `GITHUB_CLIENT_SECRET` et `ALLOWED_DOMAINS` : `.dev.vars` en local (voir `.dev.vars.example`), secrets du Worker en ligne. Jamais dans Git.
+9. Renseigner `GITHUB_CLIENT_ID` et `GITHUB_CLIENT_SECRET` : `.dev.vars` en local (voir `.dev.vars.example`), secrets du Worker en ligne (voir [`deploiement.md`](deploiement.md)). Jamais dans Git. `ALLOWED_DOMAINS` : `.dev.vars` en local, `vars` de `wrangler.jsonc` en ligne.
 
 ## Publication : flux éditorial
 
@@ -40,7 +40,7 @@ L'authentification passe par une **GitHub App** propre au site, installée sur l
 
 1. **Brouillon** : Decap crée une branche `cms/…` et une pull request.
 2. La CI vérifie le contenu (schémas, build). Une erreur de saisie bloque la publication.
-3. **Publier** : Decap fusionne la pull request (squash), ce qui déclenche le déploiement.
+3. **Publier** : Decap fusionne la pull request (squash), ce qui déclenche le déploiement (voir [`deploiement.md`](deploiement.md)).
 
 `main` étant protégée (contrôles obligatoires, branche à jour), la publication échoue tant que la CI n'a pas fini ; il suffit de réessayer une minute plus tard.
 

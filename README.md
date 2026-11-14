@@ -2,7 +2,7 @@
 
 Modèle de la **filière B** de l'usine `itnetgg-web-factory` : site statique Astro, contenus éditables avec Decap CMS, déploiement sur Cloudflare Workers via GitHub Actions.
 
-> État : composants (Astro 1/4), contenus validés par schémas (Astro 2/4) et Decap CMS (Astro 3/4) en place. Le déploiement Cloudflare arrive au bloc Astro 4/4.
+> État : composants (Astro 1/4), contenus validés par schémas (Astro 2/4), Decap CMS (Astro 3/4) et déploiement sur Cloudflare Workers (Astro 4/4). Démonstration : https://starter-astro.itnetgg-web-factory-dev.workers.dev (non indexée).
 
 ## Pour qui
 
@@ -47,6 +47,7 @@ src/
   styles/       jetons de design (couleurs, espacements), thème clair et sombre
 public/
   admin/        interface Decap CMS (voir docs/decap.md)
+  _headers      en-têtes de sécurité des fichiers statiques
 worker/         authentification GitHub de Decap (routes /oauth/*)
 ```
 
@@ -71,6 +72,10 @@ Tous les textes, images et tarifs sont dans `src/content/`, validés au build pa
 ## Édition par le client
 
 Decap CMS sur `/admin`, connexion GitHub par une GitHub App propre au site, publication par pull request validée par la CI : voir [`docs/decap.md`](docs/decap.md).
+
+## Déploiement
+
+Publication automatique sur Cloudflare Workers après chaque fusion dans `main`, en-têtes de sécurité dans `public/_headers`, retour arrière : voir [`docs/deploiement.md`](docs/deploiement.md).
 
 ## Indexation
 
