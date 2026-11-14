@@ -1,0 +1,16 @@
+# En-têtes de sécurité des fichiers statiques servis par le Worker (format Cloudflare _headers).
+# Les réponses des routes /oauth/* sont produites par worker/oauth.js et ne passent pas par ce fichier.
+
+/*
+  X-Content-Type-Options: nosniff
+  Referrer-Policy: strict-origin-when-cross-origin
+  X-Frame-Options: DENY
+  Permissions-Policy: camera=(), microphone=(), geolocation=()
+  Strict-Transport-Security: max-age=31536000
+
+/admin/*
+  X-Robots-Tag: noindex, nofollow
+  Cache-Control: no-store
+
+/_astro/*
+  Cache-Control: public, max-age=31536000, immutable
