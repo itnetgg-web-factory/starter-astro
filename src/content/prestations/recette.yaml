@@ -1,7 +1,8 @@
 title: Recette
-description: "Tout vérifier : affichage mobile, accessibilité, référencement, performances."
+description: "Tout vérifier : affichage mobile, accessibilité, référencement,
+  fluidité dans la navigation"
 deliverables:
-  - "Rapport de vérification"
-  - "Corrections validées"
+  - Rapport de vérification
+  - Corrections validées
 order: 5
 published: true
