@@ -73,6 +73,9 @@ Tous les textes, images et tarifs sont dans `src/content/`, validés au build pa
 
 Decap CMS sur `/admin`, connexion GitHub par une GitHub App propre au site, publication par pull request validée par la CI : voir [`docs/decap.md`](docs/decap.md).
 
+- [`docs/guide-utilisateur.md`](docs/guide-utilisateur.md) : guide à remettre au client (se connecter, modifier, enregistrer, publier, vérifier), sans notion de GitHub. Compléter le contact du support.
+- [`docs/guide-administrateur.md`](docs/guide-administrateur.md) : support technique (circuit d'une modification, publication refusée, journaux, restauration).
+
 ## Déploiement
 
 Publication automatique sur Cloudflare Workers après chaque fusion dans `main`, en-têtes de sécurité dans `public/_headers`, retour arrière : voir [`docs/deploiement.md`](docs/deploiement.md).

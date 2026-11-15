@@ -42,7 +42,7 @@ L'authentification passe par une **GitHub App** propre au site, installée sur l
 2. La CI vérifie le contenu (schémas, build). Une erreur de saisie bloque la publication.
 3. **Publier** : Decap fusionne la pull request (squash), ce qui déclenche le déploiement (voir [`deploiement.md`](deploiement.md)).
 
-`main` étant protégée (contrôles obligatoires, branche à jour), la publication échoue tant que la CI n'a pas fini ; il suffit de réessayer une minute plus tard.
+`main` étant protégée (contrôles obligatoires, branche à jour), la publication échoue tant que la CI n'a pas fini ; il suffit de réessayer une minute plus tard. Après une publication, les autres brouillons en attente doivent être mis à jour avant d'être publiés : le client publie donc une modification à la fois. Résolution des refus : [`guide-administrateur.md`](guide-administrateur.md). Guide à remettre au client : [`guide-utilisateur.md`](guide-utilisateur.md).
 
 ## Travailler en local
 
