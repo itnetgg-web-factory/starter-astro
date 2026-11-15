@@ -66,8 +66,8 @@ Le message « Entrée publiée » confirme la publication.
 
 1. Environ **3 minutes** après la publication, ouvrez votre site dans un nouvel onglet (ou cliquez sur **Voir en direct**).
 2. Rechargez la page pour afficher la dernière version :
-   - sur ordinateur : `Ctrl` + `Maj` + `R` (Windows) ou `Cmd` + `Maj` + `R` (Mac) ;
-   - sur téléphone : tirez la page vers le bas.
+    - sur ordinateur : `Ctrl` + `Maj` + `R` (Windows) ou `Cmd` + `Maj` + `R` (Mac) ;
+    - sur téléphone : tirez la page vers le bas.
 3. Vérifiez votre modification sur ordinateur et, si possible, sur téléphone.
 
 Si elle n'apparaît toujours pas 10 minutes après la publication, contactez votre prestataire.
