@@ -17,7 +17,7 @@ Il n'y a aucun déploiement depuis une pull request. Les déploiements s'enchaî
 | Élément | Où | Contenu |
 |---|---|---|
 | Environnement GitHub `staging` | Settings > Environments | Limité à la branche `main` |
-| `CLOUDFLARE_API_TOKEN` | Secret de l'environnement `staging` | Jeton API Cloudflare : **Account > Workers Scripts > Edit**, sur le seul compte du site |
+| `CLOUDFLARE_API_TOKEN` | Secret de l'environnement `staging` | Jeton API Cloudflare limité au **seul Worker du site**, voir « Jeton de déploiement » |
 | `CLOUDFLARE_ACCOUNT_ID` | Variable de l'environnement `staging` | Identifiant du compte Cloudflare |
 | `PUBLIC_SITE_URL` | Variable de l'environnement `staging` | Adresse publique, par exemple `https://<nom>.<sous-domaine>.workers.dev` |
 | `GITHUB_CLIENT_ID`, `GITHUB_CLIENT_SECRET` | Secrets du **Worker** (`wrangler secret put`) | GitHub App du site, voir [`decap.md`](decap.md) |
@@ -32,8 +32,23 @@ Les secrets du Worker sont conservés d'un déploiement à l'autre. Ils ne passe
 3. Amorçage : `npm run build`, puis `npx wrangler deploy`. Le Worker est créé et son adresse `workers.dev` s'affiche.
 4. Secrets du Worker : `npx wrangler secret put GITHUB_CLIENT_ID`, puis `GITHUB_CLIENT_SECRET`.
 5. GitHub App : ajouter `https://<adresse>/oauth/redirect` aux Callback URL.
-6. Environnement `staging` : limiter à `main`, créer le secret et les deux variables ci-dessus.
-7. Les déploiements suivants passent uniquement par GitHub Actions.
+6. Jeton de déploiement : le créer maintenant, le Worker existant (voir ci-dessous).
+7. Environnement `staging` : limiter à `main`, créer le secret et les deux variables ci-dessus.
+8. Les déploiements suivants passent uniquement par GitHub Actions.
+
+## Jeton de déploiement
+
+Le jeton de GitHub Actions ne donne accès qu'au Worker du site : s'il fuit, les autres Workers du compte restent protégés.
+
+1. Tableau de bord Cloudflare, compte du site : créer un jeton API (*Create Token*, modèle personnalisé).
+2. Autorisations *Individual Workers*, limitées au Worker du site : **Editor**, **Metadata Read-Only**, **Content Read-Only**. Aucune autre autorisation.
+3. Périmètre : le seul compte du site.
+4. Fixer une date d'expiration et la noter dans le dossier du projet. Pas de filtre d'adresse IP : les adresses de GitHub Actions varient.
+5. Copier le jeton directement dans le secret `CLOUDFLARE_API_TOKEN` de l'environnement `staging` (`gh secret set CLOUDFLARE_API_TOKEN --env staging -R <dépôt>`), sans le coller ailleurs.
+
+Le Worker doit exister avant la création du jeton : d'où l'amorçage par `wrangler login`. Un nouveau site demande donc un nouveau jeton.
+
+Solution de repli, plus large, si l'autorisation par Worker n'est pas proposée : **Account > Workers Scripts > Edit** sur le seul compte du site. Ce jeton peut modifier tous les Workers du compte.
 
 ## Revenir en arrière
 
