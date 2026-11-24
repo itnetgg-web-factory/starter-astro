@@ -55,7 +55,7 @@ gh run view <run> -R <dépôt> --log-failed
 
 | Erreur dans le job « Déploiement » | Solution |
 |---|---|
-| `Authentication error [code: 10000]` | Jeton Cloudflare expiré, révoqué ou sans le rôle Editor sur le Worker. Créer un nouveau jeton, puis `gh secret set CLOUDFLARE_API_TOKEN --env staging -R <dépôt>` |
+| `Authentication error [code: 10000]` | Jeton Cloudflare expiré, révoqué ou sans l'autorisation Editor sur le Worker. Créer un nouveau jeton (voir « Jeton de déploiement » dans [`deploiement.md`](deploiement.md)), puis `gh secret set CLOUDFLARE_API_TOKEN --env staging -R <dépôt>` |
 | `Cannot use the access token from location [code: 9109]` | Filtre d'adresse IP sur le jeton : le retirer (les adresses de GitHub Actions varient) |
 | Erreur réseau ou incident Cloudflare | Relancer plus tard |
 
