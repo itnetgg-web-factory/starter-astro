@@ -1,1 +1,0 @@
-Version fautive de test : retour arrière Astro (24/11/2026). Ce fichier doit disparaître après le test.
