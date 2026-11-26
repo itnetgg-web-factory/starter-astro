@@ -16,7 +16,7 @@ Les commandes `gh` et `wrangler` s'exécutent depuis la copie locale du dépôt 
 
 Un élément Decap correspond à un fichier de `src/content/` et à une seule pull request. Les images téléversées sont ajoutées dans `src/assets/images/` sur la même branche.
 
-`main` est protégée : trois contrôles obligatoires (`controles / Format`, `controles / Secrets`, `Build`) et **branche à jour exigée** avant fusion. Ces deux règles expliquent la plupart des publications refusées.
+`main` est protégée : pull request obligatoire et trois contrôles obligatoires (`controles / Format`, `controles / Secrets`, `Build`). La branche n'a **pas** à être à jour avant fusion : plusieurs brouillons se publient l'un après l'autre. Les contrôles en cours ou en échec expliquent la plupart des publications refusées.
 
 ## Résoudre une publication refusée
 
@@ -32,7 +32,7 @@ gh pr view <n> -R <dépôt> --json mergeStateStatus --jq .mergeStateStatus
 |---|---|---|
 | `BLOCKED` avec contrôles en cours | La CI n'a pas fini | Attendre 1 à 2 minutes ; le client republie |
 | `BLOCKED` avec un contrôle en échec | Contenu refusé par les schémas (texte trop long, champ manquant, image introuvable) | Lire l'erreur : `gh run view <run> -R <dépôt> --log-failed`. Faire corriger le champ par le client dans Decap (un nouvel enregistrement relance la CI), ou corriger le fichier sur la branche |
-| `BEHIND` | Une autre publication a eu lieu depuis la création du brouillon | `gh pr update-branch <n> -R <dépôt>`, attendre la CI, puis le client republie (ou fusionner : voir ci-dessous) |
+| `BEHIND` | Une autre publication a eu lieu depuis la création du brouillon. Ne bloque pas la publication | Rien à faire : le client peut publier. Si le build de `main` échoue après coup, voir « Publication acceptée mais site inchangé » |
 | `DIRTY` | Conflit : deux brouillons modifiaient le même fichier (souvent `accueil.yaml`) | Résoudre le conflit dans GitHub (*Resolve conflicts*), ou faire supprimer le brouillon par le client (**Supprimer les modifications non publiées**) et lui faire refaire la modification à partir de la version en ligne |
 | `CLEAN` | Le refus ne venait pas de GitHub : session expirée ou droits insuffisants | Le client se reconnecte. Vérifier qu'il a le droit d'écriture sur le dépôt et que la GitHub App du site y est installée |
 
@@ -90,6 +90,6 @@ Une restauration ne supprime jamais l'historique : toutes les versions restent d
 
 ## Prévenir les incidents
 
-- Rappeler au client les trois règles du guide utilisateur, en particulier : **une modification à la fois**, publiée et vérifiée avant la suivante.
-- Surveiller les brouillons anciens : `gh pr list -R <dépôt> --search "head:cms/"`. Un brouillon ouvert depuis longtemps finit en `BEHIND` ou en conflit.
+- Rappeler au client les trois règles du guide utilisateur, en particulier : **vérifier chaque publication en ligne**.
+- Surveiller les brouillons anciens : `gh pr list -R <dépôt> --search "head:cms/"`. Un brouillon ouvert depuis longtemps risque un conflit avec une publication plus récente.
 - Noter la date d'expiration du jeton Cloudflare et le renouveler avant échéance.
