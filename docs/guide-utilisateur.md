@@ -4,7 +4,7 @@ Ce guide explique comment modifier les textes, les images et les tarifs de votre
 
 ## Les trois règles à retenir
 
-1. **Une modification à la fois.** Modifiez un élément, publiez-le et vérifiez-le en ligne avant de passer au suivant. Vous pouvez changer plusieurs champs d'un même élément (par exemple le prix et la description d'une même formule) dans une seule publication.
+1. **Publiez, puis vérifiez en ligne.** Vous pouvez préparer plusieurs éléments en brouillon, puis les publier l'un après l'autre ; vérifiez chacun sur le site. Plusieurs champs d'un même élément (par exemple le prix et la description d'une même formule) partent dans une seule publication.
 2. **Comptez 3 minutes** entre la publication et l'affichage sur le site.
 3. **En cas de refus, ne recommencez pas indéfiniment.** Attendez 2 minutes et réessayez **une seule fois**. Si le refus persiste, arrêtez-vous et contactez votre prestataire (voir [En cas de problème](#en-cas-de-problème)). Votre modification n'est pas perdue.
 
