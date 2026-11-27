@@ -91,3 +91,7 @@ Voir la procédure dans [`socle`](https://github.com/itnetgg-web-factory/socle/b
 ## Conventions
 
 Voir [`socle/docs/conventions.md`](https://github.com/itnetgg-web-factory/socle/blob/main/docs/conventions.md).
+
+## Licence
+
+Code sous licence MIT : voir [`LICENSE`](LICENSE).
